@@ -28,7 +28,7 @@ namespace ThreadsConsoleApp1.Services
         private readonly object locker4 = new object();
         private readonly object locker5 = new object();
 
-        private int numberOfAttempts = 900000;
+        private int numberOfAttempts = 400000;
 
         System.Timers.Timer timer;
 
@@ -39,7 +39,6 @@ namespace ThreadsConsoleApp1.Services
 
         public void RunScenerio()
         {
-            
             Thread thread1 = new Thread(() => DoSomething(numberOfAttempts, ref lastPrimeThread1, ref progress1, locker1));
             thread1.Priority = ThreadPriority.Highest;
 
@@ -109,7 +108,6 @@ namespace ThreadsConsoleApp1.Services
                 }
                 lock (locker3)
                 {
-       ;
                     dict.Add("Normal", lastPrimeThread3);
                 }
                 lock (locker4)
