@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -26,7 +28,7 @@ namespace ThreadsConsoleApp1.Services
         private readonly object locker4 = new object();
         private readonly object locker5 = new object();
 
-        private int numberOfAttempts = 1000000;
+        private int numberOfAttempts = 900000;
 
         System.Timers.Timer timer;
 
@@ -70,7 +72,6 @@ namespace ThreadsConsoleApp1.Services
 
         private void DoSomething(int n, ref int lastPrime,ref int progress, object locker)
         {
-            Console.WriteLine("Jestem w wątku");
             for (int i = 0; i <= n; i++)
             {
                 if (isPrimeNumber(i))
@@ -91,30 +92,43 @@ namespace ThreadsConsoleApp1.Services
 
         private void showResult(object sender, object e)
         {
-            Console.WriteLine("Jestem w show Result");
             if (!isDoneWithPrimes())
             {
+
+                Dictionary<string, int> dict = new Dictionary<string, int>();
                 Console.WriteLine("Wyniki");
                 lock (locker1)
                 {
-                    Console.WriteLine("Highest: {0}", lastPrimeThread1);
+     
+                    dict.Add("Highest", lastPrimeThread1);
                 }
                 lock (locker2)
                 {
-                    Console.WriteLine("AboveNormal: {0}", lastPrimeThread2);
+
+                    dict.Add("AboveNormal", lastPrimeThread2);
                 }
                 lock (locker3)
                 {
-                    Console.WriteLine("Normal: {0}", lastPrimeThread3);
+       ;
+                    dict.Add("Normal", lastPrimeThread3);
                 }
                 lock (locker4)
                 {
-                    Console.WriteLine("BelowNormal: {0}", lastPrimeThread4);
+ 
+                    dict.Add("BelowNormal", lastPrimeThread4);
                 }
                 lock (locker5)
                 {
-                    Console.WriteLine("Lowest: {0}", lastPrimeThread5);
+                    dict.Add("Lowest", lastPrimeThread5);
                 }
+
+                var sortedDick = dict.OrderByDescending(x => x.Value);
+
+                foreach (KeyValuePair<string, int> entry in sortedDick)
+                {
+                    Console.WriteLine("{0} : {1}", entry.Key, entry.Value);
+                }
+
                 Console.WriteLine();
             }
             else
@@ -139,7 +153,6 @@ namespace ThreadsConsoleApp1.Services
 
         private bool isDoneWithPrimes()
         {
-            Console.WriteLine("Jestem w isDoneWIthPrimes");
             lock (locker1)
             {
                 if (progress1 < numberOfAttempts)
@@ -175,7 +188,6 @@ namespace ThreadsConsoleApp1.Services
                     return false;
                 }
             }
-            Console.WriteLine("To jeszcze nie konieć z primamai");
 
             return true;
         }
