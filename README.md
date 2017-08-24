@@ -6,4 +6,4 @@
 miliony chyba wystarczą) i co jakieś twie sekundki wyświetlamy który do jakiej liczby dobrnął - dobrze by pyło też przy tym wyświetlić, 
 który wątek jaki ma priorytet. 
 
-Warto to wykorzystać jakiś timer i mechnizm lock.
+Warto tu wykorzystać jakiś timer i mechnizm lock.
